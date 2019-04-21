@@ -1,4 +1,4 @@
-![Logo](docs/images/terrain-logo.png)
+![Logo](docs/images/terrain-logo-600.png)
 
 [![Build Status](https://img.shields.io/travis/NickLarsenNZ/terrain.svg)](https://travis-ci.org/NickLarsenNZ/terrain)
 [![Coveralls](https://img.shields.io/coveralls/NickLarsenNZ/terrain.svg)](http://coveralls.io/NickLarsenNZ/terrain)
