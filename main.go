@@ -2,53 +2,59 @@ package main
 
 import (
 	"fmt"
-	gohcl2 "github.com/hashicorp/hcl2/gohcl"
-	hcl2 "github.com/hashicorp/hcl2/hcl"
-	hcl2parse "github.com/hashicorp/hcl2/hclparse"
+	cli "github.com/urfave/cli"
+	"os"
 )
 
-type managedResource struct {
-	Type   string    `hcl:"type,label"`
-	Name   string    `hcl:"name,label"`
-	Config hcl2.Body `hcl:",remain"`
-}
-
-type topLevel struct {
-	/*	Atlas     *atlas            `hcl:"atlas,block"`
-		Datas     []dataResource    `hcl:"data,block"`
-		Modules   []module          `hcl:"module,block"`
-		Outputs   []output          `hcl:"output,block"`
-		Providers []provider        `hcl:"provider,block"`*/
-	Resources []managedResource `hcl:"resource,block"`
-	/*	Terraform *terraform        `hcl:"terraform,block"`
-		Variables []variable        `hcl:"variable,block"`
-		Locals    []*locals         `hcl:"locals,block"`*/
-}
-
 func main() {
+	// See http://securitygobyexample.com/urfave-cli-subcommands
 
-	filename := "test.hcl"
-	var resources = []managedResource{}
-	var raw topLevel
+	var resFlag bool
+	var outFlag string
 
-	parser := hcl2parse.NewParser()
-	f, diags := parser.ParseHCLFile(filename)
-	if diags.HasErrors() {
-		panic("diags has errors on loading file")
+	app := cli.NewApp()
+	app.Name = "terrain"
+	app.Usage = "terraform config info"
+	app.HideVersion = true
+
+	app.Authors = []cli.Author{
+		{"Nick Larsen", "nick@aptiv.co.nz"},
 	}
 
-	diags = gohcl2.DecodeBody(f.Body, nil, &raw)
-	if diags.HasErrors() {
-		panic("diags has errors on decoding body")
+	app.Flags = []cli.Flag{
+		cli.BoolFlag{
+			Name:        "resources, r",
+			Usage:       "List the Terraform resources declared",
+			Destination: &resFlag,
+		},
+		cli.StringFlag{
+			Name:        "output, o",
+			Usage:       "Output format: [text, json, markdown]",
+			Value:       "text",
+			Destination: &outFlag,
+		},
 	}
 
-	for _, rawR := range raw.Resources {
+	app.Action = func(c *cli.Context) error {
+		if resFlag {
+			fmt.Println("Resources will be listed")
+		}
 
-		fmt.Printf("Resource: %s.%s\n", rawR.Type, rawR.Name)
-		resources = append(resources, rawR)
+		switch outFlag {
+		case "json":
+			fmt.Println("Gonna output json")
+		case "markdown":
+			fmt.Println("Gonna output markdown")
+		default: // Todo: should this error, or just default to text?
+			fmt.Println("Gonna output text")
+		}
 
+		return nil
 	}
 
-	fmt.Printf("count: %d", len(resources))
+	err := app.Run(os.Args)
+	if err != nil {
+		fmt.Errorf("unable to run command line app: %s", err)
+	}
 
 }
