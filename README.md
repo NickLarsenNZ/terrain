@@ -14,11 +14,17 @@ _Scans [Hashicorp Terraform](https://www.terraform.io/) files and lists the reso
 `todo`
 
 ## Features
-- [ ] Parses all `.tf` files in the current directory
-- [ ] flags to choose what to show (resources, or datasources)
-- [ ] simple digraph or plantuml output
-- [ ] markdown table output with links to docs
+- [ ] Parses a Terraform Module configuration in a given directory
+- [ ] Diff two configurations (by directory, historical Terrain output, or Git commits)
+- [ ] Flags to choose what to show (resources, or datasources)
+- [ ] Flag to choose the output formats such as JSON, Markdown Table, etc...
+- [ ] Simple digraph or mermaid/plantuml output
+
+
+## Build
+- `go build github.com/nicklarsennz/terrain/cmd/terrain`
 
 ## References
-- https://github.com/yutannihilation/go-parse-hcl-example/blob/master/main.go
-- https://github.com/hashicorp/terraform/blob/d4ac68423c4998279f33404db46809d27a5c2362/config/loader_hcl2.go#L108-L121
+- [`hashicorp/terraform-config-inspect`](https://github.com/hashicorp/terraform-config-inspect)
+- [`urfav/cli`](https://github.com/urfave/cli)
+- [`olekukonko/tablewriter`](github.com/olekukonko/tablewriter)
