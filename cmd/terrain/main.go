@@ -12,10 +12,13 @@ func main() {
 	config := ParseFlags()
 
 	// Validate the config
-	err := config.Validate()
+	errs := config.Validate()
 
-	if err != nil {
-		fmt.Errorf("There were errors parsing the flags")
+	if len(errs) != 0 {
+		fmt.Println("There were errors parsing the flags")
+		for i, err := range errs {
+			fmt.Printf("\t%d. %s\n", i+1, err)
+		}
 		return
 	}
 
