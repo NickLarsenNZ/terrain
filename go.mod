@@ -1,4 +1,4 @@
-module terrain
+module github.com/nicklarsennz/terrain
 
 go 1.12
 
