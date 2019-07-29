@@ -12,15 +12,15 @@ matrix:
         directories:
           - $HOME/.cache/go-build
           - $HOME/gopath/pkg/mod
-    - os: osx
-      go: "1.12.x"
-      cache:
-        directories:
-          - $HOME/Library/Caches/go-build
-          - $HOME/gopath/pkg/mod
+    # - os: osx
+    #   go: "1.12.x"
+    #   cache:
+    #     directories:
+    #       - $HOME/Library/Caches/go-build
+    #       - $HOME/gopath/pkg/mod
 
 env:
-  - GO111MODULE=on
+  - GO111MODULE=on TARGET_OS="freebsd darwin linux windows" TARGET_ARCH="arm amd64"
 
 install: true
 
@@ -35,8 +35,14 @@ before_script:
 
 script:
 #  - golangci-lint run       # run a bunch of code checkers/linters in parallel
-  - go build .
+#  - go build github.com/nicklarsennz/terrain/cmd/terrain
   - go test -v -race -cover -coverprofile=coverage.out ./...  # Run all the tests with the race detector enabled
-
-after_success:
   - $HOME/gopath/bin/goveralls -coverprofile=coverage.out -service=travis-ci
+
+before_deploy:
+  - go get github.com/mitchellh/gox
+  - export FILE_NAME="terrain_${TRAVIS_TAG}_{{.OS}}_{{.Arch}}"
+  - CGO_ENABLED=0 gox -os "$TARGET_OS" -arch "$TARGET_ARCH" -output="${FILE_NAME}" github.com/nicklarsennz/terrain/cmd/terrain
+
+# after_success:
+#   - 
