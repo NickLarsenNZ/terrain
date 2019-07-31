@@ -44,5 +44,5 @@ before_deploy:
   - export FILE_NAME="terrain_${TRAVIS_TAG}_{{.OS}}_{{.Arch}}"
   - CGO_ENABLED=0 gox -os "$TARGET_OS" -arch "$TARGET_ARCH" -output="${FILE_NAME}" github.com/nicklarsennz/terrain/cmd/terrain
 
-# after_success:
-#   - 
+after_success:
+  - test $TRAVIS_BRANCH = "master" && curl https://gist.githubusercontent.com/NickLarsenNZ/ee907e05429a02fb6f2bcc73e7c34733/raw/06efdde6b4a07d04de999ea5f4c7e7d4506abaaa/bump_semver.sh | bash
