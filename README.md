@@ -1,7 +1,7 @@
 ![Logo](docs/images/terrain-logo-600.png)
 
 [![Build Status](https://img.shields.io/travis/com/NickLarsenNZ/terrain.svg)](https://travis-ci.com/NickLarsenNZ/terrain)
-[![Coveralls](https://img.shields.io/coveralls/NickLarsenNZ/terrain.svg)](http://coveralls.io/NickLarsenNZ/terrain)
+[![Coveralls](https://img.shields.io/coveralls/github/NickLarsenNZ/terrain.svg)](https://coveralls.io/github/NickLarsenNZ/terrain)
 [![GitHub](https://img.shields.io/github/license/NickLarsenNZ/terrain.svg)](https://github.com/NickLarsenNZ/terrain)
 
 # Terrain
