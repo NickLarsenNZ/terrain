@@ -31,6 +31,7 @@ install: true
 before_script:
   - go get golang.org/x/tools/cmd/cover
   - go get github.com/mattn/goveralls
+  - git clone https://github.com/markchalloner/git-semver.git && sudo git-semver/install.sh
 #  - go install github.com/golangci/golangci-lint/cmd/golangci-lint
 
 script:
