@@ -20,7 +20,6 @@ _Scans [Hashicorp Terraform](https://www.terraform.io/) files and lists the reso
 - [ ] Flag to choose the output formats such as JSON, Markdown Table, etc...
 - [ ] Simple digraph or mermaid/plantuml output
 
-
 ## Build
 - `go build github.com/nicklarsennz/terrain/cmd/terrain`
 

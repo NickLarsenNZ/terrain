@@ -30,7 +30,7 @@ func (c *Config) Validate() []error {
 }
 
 func (c *Config) isOutputValid() error {
-	if !utils.StringInSlice(&c.OutputFormat, &validOutputs) {
+	if !utils.StringInSlice(c.OutputFormat, &validOutputs) {
 		return fmt.Errorf("Output Format must be one of %v", validOutputs)
 	}
 	return nil
