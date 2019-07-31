@@ -1,7 +1,7 @@
 ![Logo](docs/images/terrain-logo-600.png)
 
 [![Build Status](https://img.shields.io/travis/com/NickLarsenNZ/terrain.svg)](https://travis-ci.com/NickLarsenNZ/terrain)
-[![Coveralls](https://img.shields.io/coveralls/NickLarsenNZ/terrain.svg)](http://coveralls.io/NickLarsenNZ/terrain)
+[![Coveralls](https://img.shields.io/coveralls/github/NickLarsenNZ/terrain.svg)](https://coveralls.io/github/NickLarsenNZ/terrain)
 [![GitHub](https://img.shields.io/github/license/NickLarsenNZ/terrain.svg)](https://github.com/NickLarsenNZ/terrain)
 
 # Terrain
@@ -19,7 +19,6 @@ _Scans [Hashicorp Terraform](https://www.terraform.io/) files and lists the reso
 - [ ] Flags to choose what to show (resources, or datasources)
 - [ ] Flag to choose the output formats such as JSON, Markdown Table, etc...
 - [ ] Simple digraph or mermaid/plantuml output
-
 
 ## Build
 - `go build github.com/nicklarsennz/terrain/cmd/terrain`

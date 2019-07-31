@@ -1,8 +1,8 @@
 package utils
 
-func StringInSlice(search *string, slice *[]string) bool {
+func StringInSlice(search string, slice *[]string) bool {
 	for _, item := range *slice {
-		if *search == item {
+		if search == item {
 			return true
 		}
 	}
