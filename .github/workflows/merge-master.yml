@@ -9,6 +9,9 @@ jobs:
     name: Bump semantic version
     runs-on: [ubuntu-latest]
     steps:
+    - name: Check out code into the Go module directory
+      uses: actions/checkout@v2
+      
     - name: Bump version and push tag
       uses: anothrNick/github-tag-action@1.17.2
       env:
@@ -24,7 +27,6 @@ jobs:
         go: [1.12.x, 1.13.x]
 
     steps:
-
     - name: Set up Go ${{ matrix.go }}
       uses: actions/setup-go@v1
       with:
