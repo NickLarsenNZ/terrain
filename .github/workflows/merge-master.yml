@@ -16,7 +16,7 @@ jobs:
       uses: anothrNick/github-tag-action@1.17.2
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        DEFAULT_BUMP: 0.0.1
+        DEFAULT_BUMP: patch
 
   build:
     name: Build
@@ -25,7 +25,6 @@ jobs:
       matrix:
         os: [ubuntu-latest, macOS-latest, windows-latest]
         go: [1.12.x, 1.13.x]
-
     steps:
     - name: Set up Go ${{ matrix.go }}
       uses: actions/setup-go@v1
