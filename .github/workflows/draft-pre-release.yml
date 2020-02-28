@@ -1,0 +1,76 @@
+name: Draft Pre-Release
+
+on: 
+  push:
+    tags:
+    - '*'
+
+jobs:
+
+  build:
+    name: Build
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        os: [ubuntu-latest, macOS-latest, windows-latest]
+        go: [1.12.x, 1.13.x]
+    steps:
+    - name: Set up Go ${{ matrix.go }}
+      uses: actions/setup-go@v1
+      with:
+        go-version: ${{ matrix.go }}
+      id: go
+
+    - name: Check out code into the Go module directory
+      uses: actions/checkout@v2
+    
+    - name: Extract tag name
+      id: tag
+      uses: actions/github-script@0.2.0
+      with:
+        github-token: ${{ secrets.GITHUB_TOKEN }}
+        script: |
+          return context.payload.ref.replace(/\/refs\/tags\//, '');
+    
+    - uses: actions/cache@v1
+      with:
+        path: ~/go/pkg/mod
+        key: ${{ runner.os }}-go-${{ hashFiles('**/go.sum') }}
+        restore-keys: |
+          ${{ runner.os }}-go-
+
+    - name: Get dependencies
+      run: |
+        go get -v -t -d ./...
+
+# All commits come through PR, and PRs are already tested
+#     - name: Test
+#       run: go test ./...
+
+    - name: Build
+      run: go build -v -o build/terrain-${{ matrix.os }}-${{ steps.outputs.tag.result }} ./cmd/terrain
+
+# Coming soon:
+#   pre-release:
+#     runs-on: [ubuntu-latest]
+#     name: Create a pre-release
+
+
+  release:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v1
+    - uses: ncipollo/release-action@v1
+      with:
+        draft: true
+        prerelease: true
+        artifact: "build" # Output path of Go build from the Merge Master workflow
+        body: |
+          # Release
+          
+          ## Features
+          - here
+          
+          ## Fixes
+        
+        token: ${{ secrets.GITHUB_TOKEN }}
