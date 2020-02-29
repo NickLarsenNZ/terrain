@@ -40,7 +40,7 @@ jobs:
       run: echo ::set-output name=VERSION::${GITHUB_REF#refs/tags/}
     
     - name: Print Tag
-      run: echo ${{ steps.get_version.outputs.VERSION }}
+      run: echo $VERSION
     
     - uses: actions/cache@v1
       with:
