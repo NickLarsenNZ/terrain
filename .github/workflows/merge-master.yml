@@ -41,7 +41,9 @@ jobs:
     # git describe --tags
     - name: Get the version
       id: tag
-      run: echo ::set-output name=result::$(git describe --tags)
+      run: |
+        git fetch --depth=1 origin +refs/tags/*:refs/tags/*
+        echo ::set-output name=result::$(git describe --tags)
     
     - name: Print Tag
       run: echo ${{ steps.output.tags.result }}
