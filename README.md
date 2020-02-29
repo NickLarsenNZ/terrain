@@ -8,7 +8,13 @@
 _Scans [Hashicorp Terraform](https://www.terraform.io/) files and lists the resources and datasources used in alphabetical order for documentation purposes._
 
 ## Installation
-`todo`
+### Container
+
+You can simply make an alias for the `terrain` command, which runs the container and mounts your current directory in Read-Only mode.
+
+```sh
+alias terrain='docker run -v $(pwd):/module:ro nicklarsennz/terrain'
+```
 
 ## Usage
 `todo`
