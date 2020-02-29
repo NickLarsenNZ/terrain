@@ -96,6 +96,10 @@ jobs:
         git fetch --depth=1 origin +refs/tags/*:refs/tags/*
         echo ::set-output name=result::$(git describe --tags)
 
+    - name: Check something
+      shell: bash
+      run: ls -al
+
     - uses: ncipollo/release-action@v1
       with:
         tag: ${{ steps.tag.outputs.result }}
