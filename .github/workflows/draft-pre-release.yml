@@ -50,12 +50,6 @@ jobs:
     - name: Build
       run: go build -v -o build/terrain-${{ matrix.os }}-${{ steps.outputs.tag.result }} ./cmd/terrain
 
-# Coming soon:
-#   pre-release:
-#     runs-on: [ubuntu-latest]
-#     name: Create a pre-release
-
-
   release:
     runs-on: ubuntu-latest
     steps:
