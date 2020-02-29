@@ -33,26 +33,18 @@ jobs:
       id: go
 
     - name: Check out code into the Go module directory
+      id: checkout
       uses: actions/checkout@v2
     
-    - name: Print GITHUB_REF
-      run: echo ${GITHUB_REF}
-    
-    - uses: olegtarasov/get-tag@v2
-      id: tagName
-#         with:
-#           tagRegex: "foobar-(.*)"  # Optional. Returns specified group text as tag name. Full tag string is returned if regex is not defined.
-#           tagRegexGroup: 1 # Optional. Default is 1.
-
-    - name: Some other step # Output usage example
-      run: echo ${{ steps.tagName.outputs.tag }}
-    
+    # Because the GITHUB_REF will be refs/heads/master,
+    # We need to get the tag for the current commit
+    # git describe --tags
     - name: Get the version
       id: tag
-      run: echo ::set-output name=VERSION::${GITHUB_REF#refs/tags/}
+      run: echo ::set-output name=result::$(git describe --tags)
     
     - name: Print Tag
-      run: echo $VERSION
+      run: echo ${{ steps.output.tags.result }}
     
     - uses: actions/cache@v1
       with:
@@ -71,7 +63,7 @@ jobs:
   release:
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v1
+    - uses: actions/checkout@v2
     - uses: ncipollo/release-action@v1
       with:
         draft: true
