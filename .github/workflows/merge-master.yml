@@ -96,18 +96,11 @@ jobs:
         git fetch --depth=1 origin +refs/tags/*:refs/tags/*
         echo ::set-output name=result::$(git describe --tags)
 
-    - name: Download build artifacts
-      uses: actions/download-artifact@v1
-      with:
-        name: build
-        path: build
-
     - uses: ncipollo/release-action@v1
       with:
         tag: ${{ steps.tag.outputs.result }}
         draft: true
         prerelease: true
-        allowUpdates: true
         artifact: "build" # Output path of Go build from the Merge Master workflow
         body: |
           # Release
