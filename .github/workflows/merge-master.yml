@@ -35,16 +35,12 @@ jobs:
     - name: Check out code into the Go module directory
       uses: actions/checkout@v2
     
-    - name: Extract tag name
+    - name: Get the version
       id: tag
-      uses: actions/github-script@0.2.0
-      with:
-        github-token: ${{ secrets.GITHUB_TOKEN }}
-        script: |
-          return context.payload.ref.replace(/\/refs\/tags\//, '');
+      run: echo ::set-output name=VERSION::${GITHUB_REF#refs/tags/}
     
     - name: Print Tag
-      run: echo ${{ steps.outputs.tag.result }}
+      run: echo ${{ steps.get_version.outputs.VERSION }}
     
     - uses: actions/cache@v1
       with:
