@@ -72,6 +72,12 @@ jobs:
       run: |
         OS=$(echo $OS | tr [A-Z] [a-z])
         go build -v -o build/terrain-${OS}-${TAG} ./cmd/terrain
+    
+    - name: Archive build artifacts
+      uses: actions/upload-artifact@v1
+      with:
+        name: build
+        path: build
 
   release:
     runs-on: ubuntu-latest
@@ -90,6 +96,11 @@ jobs:
         git fetch --depth=1 origin +refs/tags/*:refs/tags/*
         echo ::set-output name=result::$(git describe --tags)
 
+    - name: Download build artifacts
+      uses: actions/download-artifact@v1
+      with:
+        name: build
+
     - uses: ncipollo/release-action@v1
       with:
         tag: ${{ steps.tag.outputs.result }}
@@ -103,5 +114,6 @@ jobs:
           - here
           
           ## Fixes
+          - here
         
         token: ${{ secrets.GITHUB_TOKEN }}
