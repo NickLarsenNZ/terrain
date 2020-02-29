@@ -42,13 +42,15 @@ jobs:
     # git describe --tags
     - name: Get the version
       id: tag
+      shell: bash
       run: |
         git pull
         git fetch --depth=1 origin +refs/tags/*:refs/tags/*
         echo ::set-output name=result::$(git describe --tags)
     
     - name: Print Tag
-      run: echo ${{ steps.outputs.tag.result }}
+      shell: bash
+      run: echo ${{ steps.tag.outputs.result }}
     
     - uses: actions/cache@v1
       with:
@@ -58,11 +60,13 @@ jobs:
           ${{ runner.os }}-go-
 
     - name: Get dependencies
+      shell: bash
       run: |
-        go get -v -t -d ./...
+        go get -v -d ./...
 
     - name: Build
-      run: go build -v -o build/terrain-${{ runner.os }}-${{ steps.outputs.tag.result }} ./cmd/terrain
+      shell: bash
+      run: go build -v -o build/terrain-${{ runner.os }}-${{ steps.tag.outputs.result }} ./cmd/terrain
 
   release:
     runs-on: ubuntu-latest
