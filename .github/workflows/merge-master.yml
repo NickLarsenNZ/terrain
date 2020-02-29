@@ -47,9 +47,7 @@ jobs:
         echo ::set-output name=result::$(git describe --tags)
     
     - name: Print Tag
-      env:
-        VERSION: ${{ steps.output.tags.result }}
-      run: echo $VERSION
+      run: echo ${{ steps.outputs.tag.result }}
     
     - uses: actions/cache@v1
       with:
