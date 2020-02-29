@@ -79,6 +79,36 @@ jobs:
         name: build
         path: build
 
+  container:
+    runs-on: ubuntu-latest
+    needs: [build]
+    steps:
+    - uses: actions/checkout@v2
+
+    # Because the GITHUB_REF will be refs/heads/master,
+    # We need to get the tag for the current commit
+    # git describe --tags
+    - name: Get the version
+      id: tag
+      shell: bash
+      run: |
+        git pull
+        git fetch --depth=1 origin +refs/tags/*:refs/tags/*
+        echo ::set-output name=result::$(git describe --tags)
+
+    - name: Download build artifacts
+      uses: actions/download-artifact@v1
+      with:
+        name: build
+        path: build
+
+    - name: Publish to Registry
+      uses: HurricanKai/Publish-Docker-Github-Action@master
+      with:
+        name: nicklarsennz/terrain
+        username: nicklarsennz
+        password: ${{ secrets.DOCKERHUB_SECRET }}
+
   release:
     runs-on: ubuntu-latest
     needs: [build]
