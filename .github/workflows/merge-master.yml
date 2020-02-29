@@ -66,13 +66,30 @@ jobs:
 
     - name: Build
       shell: bash
-      run: go build -v -o build/terrain-${{ runner.os }}-${{ steps.tag.outputs.result }} ./cmd/terrain
+      env:
+        OS: ${{ runner.os }}
+        TAG: ${{ steps.tag.outputs.result }}
+      run: |
+        OS=$(echo $OS | tr [A-Z] [a-z])
+        go build -v -o build/terrain-$OS-$TAG ./cmd/terrain
 
   release:
     runs-on: ubuntu-latest
     needs: [build]
     steps:
     - uses: actions/checkout@v2
+
+    # Because the GITHUB_REF will be refs/heads/master,
+    # We need to get the tag for the current commit
+    # git describe --tags
+    - name: Get the version
+      id: tag
+      shell: bash
+      run: |
+        git pull
+        git fetch --depth=1 origin +refs/tags/*:refs/tags/*
+        echo ::set-output name=result::$(git describe --tags)
+
     - uses: ncipollo/release-action@v1
       with:
         draft: true
