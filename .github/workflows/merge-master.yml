@@ -107,6 +107,7 @@ jobs:
         tag: ${{ steps.tag.outputs.result }}
         draft: true
         prerelease: true
+        allowUpdates: true
         artifact: "build" # Output path of Go build from the Merge Master workflow
         body: |
           # Release
