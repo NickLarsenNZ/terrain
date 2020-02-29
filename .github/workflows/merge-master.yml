@@ -71,7 +71,7 @@ jobs:
         TAG: ${{ steps.tag.outputs.result }}
       run: |
         OS=$(echo $OS | tr [A-Z] [a-z])
-        go build -v -o build/terrain-$OS-$TAG ./cmd/terrain
+        go build -v -o build/terrain-${OS}-${TAG} ./cmd/terrain
 
   release:
     runs-on: ubuntu-latest
@@ -92,6 +92,7 @@ jobs:
 
     - uses: ncipollo/release-action@v1
       with:
+        tag: ${{ steps.tag.outputs.result }}
         draft: true
         prerelease: true
         artifact: "build" # Output path of Go build from the Merge Master workflow
