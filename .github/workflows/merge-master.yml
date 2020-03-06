@@ -102,10 +102,17 @@ jobs:
         name: build
         path: build
 
+
+    - name: Override GITHUB_REF environment variable
+      uses: allenevans/set-env@v1.0.0
+      with:
+        GITHUB_REF: refs/tags/${{ steps.tag.outputs.result }}
+
     - name: Publish to Registry
       uses: HurricanKai/Publish-Docker-Github-Action@master
       with:
         name: nicklarsennz/terrain
+        tagging: true
         username: nicklarsennz
         password: ${{ secrets.DOCKERHUB_SECRET }}
 
