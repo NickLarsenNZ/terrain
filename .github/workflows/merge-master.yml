@@ -106,6 +106,7 @@ jobs:
     - name: Override GITHUB_REF environment variable
       uses: allenevans/set-env@v1.0.0
       with:
+        overwrite: false
         GITHUB_REF: refs/tags/${{ steps.tag.outputs.result }}
 
     - name: Publish to Registry
