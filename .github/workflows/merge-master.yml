@@ -109,10 +109,10 @@ jobs:
         GITHUB_REF: refs/tags/${{ steps.tag.outputs.result }}
 
     - name: Publish to Registry
-      uses: HurricanKai/Publish-Docker-Github-Action@master
+      uses: elgohr/Publish-Docker-Github-Action@master
       with:
         name: nicklarsennz/terrain
-        tagging: true
+        tags: "latest,${{ steps.tag.outputs.result }}"
         username: nicklarsennz
         password: ${{ secrets.DOCKERHUB_SECRET }}
 
